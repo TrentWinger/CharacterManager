@@ -434,7 +434,7 @@ public class Main extends Application {
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("D&D");
 
         primaryStage.setScene(scene);
@@ -511,6 +511,12 @@ public class Main extends Application {
                     data.remove(i);
                 }
             }
+        }
+        for(int i = 0; i < data.size(); i++){
+            if(data.get(i).getCharacter().equals("")){
+                data.remove(i);
+            }
+
         }
 
     }
