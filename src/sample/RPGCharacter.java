@@ -1,5 +1,5 @@
 package sample;
-
+//Hello world
 public class RPGCharacter {
 
     private String character;
