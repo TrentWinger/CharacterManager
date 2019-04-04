@@ -592,7 +592,15 @@ public class Main extends Application {
            @Override
            public void handle(ActionEvent e){
                Random rand = new Random();
-               d20.setText(Integer.toString((rand.nextInt(20)+1)*Integer.parseInt(d20count.getText())+Integer.parseInt(d20add.getText())));
+               int temp = 0;
+
+               for(int i=0; i<Integer.parseInt(d20count.getText());i++){
+                   temp += rand.nextInt(20)+1;
+               }
+
+               temp += Integer.parseInt(d20add.getText());
+
+               d20.setText(Integer.toString(temp));
            }
         });
 
@@ -623,7 +631,15 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e){
                 Random rand = new Random();
-                d12.setText(Integer.toString((rand.nextInt(12)+1)*Integer.parseInt(d12count.getText())+Integer.parseInt(d12add.getText())));
+                int temp = 0;
+
+                for(int i=0; i<Integer.parseInt(d12count.getText());i++){
+                    temp += rand.nextInt(12)+1;
+                }
+
+                temp += Integer.parseInt(d12add.getText());
+
+                d12.setText(Integer.toString(temp));
             }
         });
 
@@ -656,7 +672,15 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e){
                 Random rand = new Random();
-                d10.setText(Integer.toString((rand.nextInt(10)+1)*Integer.parseInt(d10count.getText())+Integer.parseInt(d10add.getText())));
+                int temp = 0;
+
+                for(int i=0; i<Integer.parseInt(d10count.getText());i++){
+                    temp += rand.nextInt(10)+1;
+                }
+
+                temp += Integer.parseInt(d10add.getText());
+
+                d10.setText(Integer.toString(temp));
             }
         });
 
@@ -689,7 +713,15 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e){
                 Random rand = new Random();
-                d8.setText(Integer.toString((rand.nextInt(8)+1)*Integer.parseInt(d8count.getText())+Integer.parseInt(d8add.getText())));
+                int temp = 0;
+
+                for(int i=0; i<Integer.parseInt(d8count.getText());i++){
+                    temp += rand.nextInt(8)+1;
+                }
+
+                temp += Integer.parseInt(d8add.getText());
+
+                d8.setText(Integer.toString(temp));
             }
         });
 
@@ -722,7 +754,15 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e){
                 Random rand = new Random();
-                d6.setText(Integer.toString((rand.nextInt(6)+1)*Integer.parseInt(d6count.getText())+Integer.parseInt(d6add.getText())));
+                int temp = 0;
+
+                for(int i=0; i<Integer.parseInt(d6count.getText());i++){
+                    temp += rand.nextInt(6)+1;
+                }
+
+                temp += Integer.parseInt(d6add.getText());
+
+                d6.setText(Integer.toString(temp));
             }
         });
 
@@ -755,7 +795,15 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e){
                 Random rand = new Random();
-                d4.setText(Integer.toString((rand.nextInt(4)+1)*Integer.parseInt(d4count.getText())+Integer.parseInt(d4add.getText())));
+                int temp = 0;
+
+                for(int i=0; i<Integer.parseInt(d4count.getText());i++){
+                    temp += rand.nextInt(4)+1;
+                }
+
+                temp += Integer.parseInt(d4add.getText());
+
+                d4.setText(Integer.toString(temp));
             }
         });
 
@@ -793,7 +841,15 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e){
                 Random rand = new Random();
-                dCustom.setText(Integer.toString((rand.nextInt(Integer.parseInt(customNum.getText()))+1)*Integer.parseInt(customCount.getText())+Integer.parseInt(customAdd.getText())));
+                int temp = 0;
+
+                for(int i=0; i<Integer.parseInt(customCount.getText());i++){
+                    temp += rand.nextInt(Integer.parseInt(customNum.getText()))+1;
+                }
+
+                temp += Integer.parseInt(customAdd.getText());
+
+                dCustom.setText(Integer.toString(temp));
             }
         });
 
