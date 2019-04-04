@@ -30,6 +30,10 @@ public class Main extends Application {
     BufferedReader br;
     FileReader fr;
     HBox hb = new HBox();
+
+    Scene tableScene;
+    Scene diceScene;
+
     private TableView<RPGCharacter> table = new TableView<RPGCharacter>();
     private ObservableList<RPGCharacter> data =
             FXCollections.observableArrayList(
@@ -43,6 +47,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         Scene scene = new Scene(new Group());
+
         primaryStage.setTitle("Table View Sample");
         primaryStage.setWidth(1500);
         primaryStage.setHeight(600);
@@ -420,10 +425,18 @@ public class Main extends Application {
             }
         });
 
+        final Button diceButton = new Button("Dice");
+        diceButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                toDiceScene(primaryStage);
+            }
+        });
+
         hb.getChildren().addAll(addPlayerName, addCharacterName, addRace, addSubRace, addPrimary,
                 addSecondary, addStatus, addLocation, addDate, addLevel, addStr,
                 addDex, addCon, addInt, addWis, addCha, addButton, saveButton,
-                loadButton);
+                loadButton, diceButton);
         hb.setSpacing(3);
 
 
@@ -440,6 +453,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         load();
+        tableScene = scene;
     }
 
     public void save() {
@@ -486,7 +500,6 @@ public class Main extends Application {
             br = new BufferedReader(fr);
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
                 String[] attributes = line.split(",");
 
                 RPGCharacter character = new RPGCharacter(attributes[0], attributes[1],
@@ -521,6 +534,42 @@ public class Main extends Application {
 
     }
 
+    public void toTableScene(Stage primaryStage){
+
+        primaryStage.setScene(tableScene);
+        primaryStage.show();
+
+    }
+
+    public void toDiceScene(Stage primaryStage){
+
+        Scene diceScene = new Scene(new Group());
+
+        Button changeScene = new Button("Go back");
+        changeScene.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toTableScene(primaryStage);
+            }
+        });
+
+
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(changeScene);
+
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(new Label("beans"), hbox);
+
+
+        ((Group) diceScene.getRoot()).getChildren().addAll(vbox);
+        primaryStage.setScene(diceScene);
+        primaryStage.show();
+    }
+
+    public void createDice(){
+
+
+    }
 }
 
 
