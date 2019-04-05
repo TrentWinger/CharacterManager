@@ -430,9 +430,9 @@ public class Main extends Application {
         });
 
         final Button diceButton = new Button("Dice");
-        diceButton.setOnAction(new EventHandler<ActionEvent>(){
+        diceButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
                 toDiceScene(primaryStage);
             }
         });
@@ -524,17 +524,17 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        for(int i = 0; i < data.size(); i++){
-            for(int j = 0; j < data.size(); j++){
-                if((i != j) &&
+        for (int i = 0; i < data.size(); i++) {
+            for (int j = 0; j < data.size(); j++) {
+                if ((i != j) &&
                         data.get(i).getCharacter().equals(data.get(j).getCharacter()) &&
-                        data.get(i).getPlayer().equals(data.get(j).getPlayer())){
+                        data.get(i).getPlayer().equals(data.get(j).getPlayer())) {
                     data.remove(i);
                 }
             }
         }
-        for(int i = 0; i < data.size(); i++){
-            if(data.get(i).getCharacter().equals("")){
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getCharacter().equals("")) {
                 data.remove(i);
             }
 
@@ -542,16 +542,16 @@ public class Main extends Application {
 
     }
 
-    private void toTableScene(Stage primaryStage){
+    private void toTableScene(Stage primaryStage) {
 
         primaryStage.setScene(tableScene);
         primaryStage.show();
 
     }
 
-    private void toDiceScene(Stage primaryStage){
+    private void toDiceScene(Stage primaryStage) {
 
-        if(diceScene == null){
+        if (diceScene == null) {
             createDice(primaryStage);
         }
 
@@ -559,253 +559,91 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void createDice(Stage primaryStage){
+
+    private void createDice(Stage primaryStage) {
         diceScene = new Scene(new Group());
 
         final int buttonSize = 60;
 
-        TextField d20 = new TextField();
-        d20.setEditable(false);
-        d20.setFont(new Font("Arial", 15));
-        d20.setMaxWidth(buttonSize);
-        d20.setMaxHeight(buttonSize);
+        HBox[] diceBoxes = new HBox[6];
 
-        TextField d20count = new TextField();
-        d20count.setEditable(true);
-        d20count.setFont(new Font("Arial", 15));
-        d20count.setMaxWidth(buttonSize);
-        d20count.setMaxHeight(buttonSize);
-        d20count.setText("1");
+        for (int i = 0; i <= 5; i++) {
 
-        TextField d20add = new TextField();
-        d20add.setEditable(true);
-        d20add.setFont(new Font("Arial", 15));
-        d20add.setMaxWidth(buttonSize);
-        d20add.setMaxHeight(buttonSize);
-        d20add.setText("0");
+            int dNumber = 0;
 
-
-        Button roll20 = new Button("d20");
-        roll20.setPrefWidth(buttonSize);
-        roll20.setMinHeight(buttonSize);
-        roll20.setOnAction(new EventHandler<ActionEvent>(){
-           @Override
-           public void handle(ActionEvent e){
-               Random rand = new Random();
-               int temp = 0;
-
-               for(int i=0; i<Integer.parseInt(d20count.getText());i++){
-                   temp += rand.nextInt(20)+1;
-               }
-
-               temp += Integer.parseInt(d20add.getText());
-
-               d20.setText(Integer.toString(temp));
-           }
-        });
-
-        TextField d12 = new TextField();
-        d12.setEditable(false);
-        d12.setFont(new Font("Arial", 15));
-        d12.setMaxWidth(buttonSize);
-        d12.setMaxHeight(buttonSize);
-
-        TextField d12count = new TextField();
-        d12count.setEditable(true);
-        d12count.setFont(new Font("Arial", 15));
-        d12count.setMaxWidth(buttonSize);
-        d12count.setMaxHeight(buttonSize);
-        d12count.setText("1");
-
-        TextField d12add = new TextField();
-        d12add.setEditable(true);
-        d12add.setFont(new Font("Arial", 15));
-        d12add.setMaxWidth(buttonSize);
-        d12add.setMaxHeight(buttonSize);
-        d12add.setText("0");
-
-        Button roll12 = new Button("d12");
-        roll12.setPrefWidth(buttonSize);
-        roll12.setMinHeight(buttonSize);
-        roll12.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent e){
-                Random rand = new Random();
-                int temp = 0;
-
-                for(int i=0; i<Integer.parseInt(d12count.getText());i++){
-                    temp += rand.nextInt(12)+1;
-                }
-
-                temp += Integer.parseInt(d12add.getText());
-
-                d12.setText(Integer.toString(temp));
+            switch (i) {
+                case 0:
+                    dNumber = 20;
+                    break;
+                case 1:
+                    dNumber = 12;
+                    break;
+                case 2:
+                    dNumber = 10;
+                    break;
+                case 3:
+                    dNumber = 8;
+                    break;
+                case 4:
+                    dNumber = 6;
+                    break;
+                case 5:
+                    dNumber = 4;
+                    break;
             }
-        });
+
+            final int diceFinal = dNumber;
+
+            TextField text = new TextField();
+            text.setEditable(false);
+            text.setFont(new Font("Arial", 15));
+            text.setMaxWidth(buttonSize);
+            text.setMaxHeight(buttonSize);
+
+            TextField textCount = new TextField();
+            textCount.setEditable(true);
+            textCount.setFont(new Font("Arial", 15));
+            textCount.setMaxWidth(buttonSize);
+            textCount.setMaxHeight(buttonSize);
+            textCount.setText("1");
+
+            TextField textAdd = new TextField();
+            textAdd.setEditable(true);
+            textAdd.setFont(new Font("Arial", 15));
+            textAdd.setMaxWidth(buttonSize);
+            textAdd.setMaxHeight(buttonSize);
+            textAdd.setText("0");
 
 
+            Button rollButton = new Button("d" + dNumber);
+            rollButton.setPrefWidth(buttonSize);
+            rollButton.setMinHeight(buttonSize);
+            rollButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    Random rand = new Random();
 
-        TextField d10 = new TextField();
-        d10.setEditable(false);
-        d10.setFont(new Font("Arial", 15));
-        d10.setMaxWidth(buttonSize);
-        d10.setMaxHeight(buttonSize);
 
-        TextField d10count = new TextField();
-        d10count.setEditable(true);
-        d10count.setFont(new Font("Arial", 15));
-        d10count.setMaxWidth(buttonSize);
-        d10count.setMaxHeight(buttonSize);
-        d10count.setText("1");
+                    int temp = 0;
 
-        TextField d10add = new TextField();
-        d10add.setEditable(true);
-        d10add.setFont(new Font("Arial", 15));
-        d10add.setMaxWidth(buttonSize);
-        d10add.setMaxHeight(buttonSize);
-        d10add.setText("0");
+                    for (int i = 0; i < Integer.parseInt(textCount.getText()); i++) {
+                        temp += rand.nextInt(diceFinal) + 1;
+                    }
 
-        Button roll10 = new Button("d10");
-        roll10.setPrefWidth(buttonSize);
-        roll10.setMinHeight(buttonSize);
-        roll10.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent e){
-                Random rand = new Random();
-                int temp = 0;
+                    temp += Integer.parseInt(textAdd.getText());
 
-                for(int i=0; i<Integer.parseInt(d10count.getText());i++){
-                    temp += rand.nextInt(10)+1;
+                    text.setText(Integer.toString(temp));
                 }
+            });
 
-                temp += Integer.parseInt(d10add.getText());
+            System.out.println(diceFinal);
+            System.out.println(i);
+            diceBoxes[i] = new HBox();
+            diceBoxes[i].getChildren().addAll(textCount, rollButton, textAdd, text);
+            diceBoxes[i].setSpacing(3);
+            diceBoxes[i].setAlignment(Pos.CENTER);
 
-                d10.setText(Integer.toString(temp));
-            }
-        });
-
-
-
-        TextField d8 = new TextField();
-        d8.setEditable(false);
-        d8.setFont(new Font("Arial", 15));
-        d8.setMaxWidth(buttonSize);
-        d8.setMaxHeight(buttonSize);
-
-        TextField d8count = new TextField();
-        d8count.setEditable(true);
-        d8count.setFont(new Font("Arial", 15));
-        d8count.setMaxWidth(buttonSize);
-        d8count.setMaxHeight(buttonSize);
-        d8count.setText("1");
-
-        TextField d8add = new TextField();
-        d8add.setEditable(true);
-        d8add.setFont(new Font("Arial", 15));
-        d8add.setMaxWidth(buttonSize);
-        d8add.setMaxHeight(buttonSize);
-        d8add.setText("0");
-
-        Button roll8 = new Button("d8");
-        roll8.setPrefWidth(buttonSize);
-        roll8.setMinHeight(buttonSize);
-        roll8.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent e){
-                Random rand = new Random();
-                int temp = 0;
-
-                for(int i=0; i<Integer.parseInt(d8count.getText());i++){
-                    temp += rand.nextInt(8)+1;
-                }
-
-                temp += Integer.parseInt(d8add.getText());
-
-                d8.setText(Integer.toString(temp));
-            }
-        });
-
-
-
-        TextField d6 = new TextField();
-        d6.setEditable(false);
-        d6.setFont(new Font("Arial", 15));
-        d6.setMaxWidth(buttonSize);
-        d6.setMaxHeight(buttonSize);
-
-        TextField d6count = new TextField();
-        d6count.setEditable(true);
-        d6count.setFont(new Font("Arial", 15));
-        d6count.setMaxWidth(buttonSize);
-        d6count.setMaxHeight(buttonSize);
-        d6count.setText("1");
-
-        TextField d6add = new TextField();
-        d6add.setEditable(true);
-        d6add.setFont(new Font("Arial", 15));
-        d6add.setMaxWidth(buttonSize);
-        d6add.setMaxHeight(buttonSize);
-        d6add.setText("0");
-
-        Button roll6 = new Button("d6");
-        roll6.setPrefWidth(buttonSize);
-        roll6.setMinHeight(buttonSize);
-        roll6.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent e){
-                Random rand = new Random();
-                int temp = 0;
-
-                for(int i=0; i<Integer.parseInt(d6count.getText());i++){
-                    temp += rand.nextInt(6)+1;
-                }
-
-                temp += Integer.parseInt(d6add.getText());
-
-                d6.setText(Integer.toString(temp));
-            }
-        });
-
-
-
-        TextField d4 = new TextField();
-        d4.setEditable(false);
-        d4.setFont(new Font("Arial", 15));
-        d4.setMaxWidth(buttonSize);
-        d4.setMaxHeight(buttonSize);
-
-        TextField d4count = new TextField();
-        d4count.setEditable(true);
-        d4count.setFont(new Font("Arial", 15));
-        d4count.setMaxWidth(buttonSize);
-        d4count.setMaxHeight(buttonSize);
-        d4count.setText("1");
-
-        TextField d4add = new TextField();
-        d4add.setEditable(true);
-        d4add.setFont(new Font("Arial", 15));
-        d4add.setMaxWidth(buttonSize);
-        d4add.setMaxHeight(buttonSize);
-        d4add.setText("0");
-
-        Button roll4 = new Button("d4");
-        roll4.setPrefWidth(buttonSize);
-        roll4.setMinHeight(buttonSize);
-        roll4.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent e){
-                Random rand = new Random();
-                int temp = 0;
-
-                for(int i=0; i<Integer.parseInt(d4count.getText());i++){
-                    temp += rand.nextInt(4)+1;
-                }
-
-                temp += Integer.parseInt(d4add.getText());
-
-                d4.setText(Integer.toString(temp));
-            }
-        });
+        }
 
         TextField dCustom = new TextField();
         dCustom.setEditable(false);
@@ -837,14 +675,14 @@ public class Main extends Application {
         Button customBut = new Button("Custom");
         customBut.setPrefWidth(buttonSize);
         customBut.setMinHeight(buttonSize);
-        customBut.setOnAction(new EventHandler<ActionEvent>(){
+        customBut.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
                 Random rand = new Random();
                 int temp = 0;
 
-                for(int i=0; i<Integer.parseInt(customCount.getText());i++){
-                    temp += rand.nextInt(Integer.parseInt(customNum.getText()))+1;
+                for (int i = 0; i < Integer.parseInt(customCount.getText()); i++) {
+                    temp += rand.nextInt(Integer.parseInt(customNum.getText())) + 1;
                 }
 
                 temp += Integer.parseInt(customAdd.getText());
@@ -853,15 +691,10 @@ public class Main extends Application {
             }
         });
 
-
-
-
-
-
         Button changeScene = new Button("Character Table");
-        changeScene.setOnAction(new EventHandler<ActionEvent>(){
+        changeScene.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
                 toTableScene(primaryStage);
             }
         });
@@ -888,38 +721,6 @@ public class Main extends Application {
         labels.setSpacing(20);
         labels.setAlignment(Pos.CENTER);
 
-        HBox dice20 = new HBox();
-        dice20.getChildren().addAll(d20count, roll20, d20add, d20);
-        dice20.setSpacing(3);
-        dice20.setAlignment(Pos.CENTER);
-
-
-        HBox dice12 = new HBox();
-        dice12.getChildren().addAll(d12count, roll12, d12add, d12);
-        dice12.setSpacing(3);
-        dice12.setAlignment(Pos.CENTER);
-
-        HBox dice10 = new HBox();
-        dice10.getChildren().addAll(d10count, roll10, d10add, d10);
-        dice10.setSpacing(3);
-        dice10.setAlignment(Pos.CENTER);
-
-        HBox dice8 = new HBox();
-        dice8.getChildren().addAll(d8count, roll8, d8add, d8);
-        dice8.setSpacing(3);
-        dice8.setAlignment(Pos.CENTER);
-
-        HBox dice6 = new HBox();
-        dice6.getChildren().addAll(d6count, roll6, d6add, d6);
-        dice6.setSpacing(3);
-        dice6.setAlignment(Pos.CENTER);
-
-
-        HBox dice4 = new HBox();
-        dice4.getChildren().addAll(d4count, roll4, d4add, d4);
-        dice4.setSpacing(3);
-        dice4.setAlignment(Pos.CENTER);
-
         HBox customDice = new HBox();
         customDice.getChildren().addAll(customBut, customCount, customNum, customAdd, dCustom);
         customDice.setSpacing(3);
@@ -930,7 +731,8 @@ public class Main extends Application {
         title.setFont(new Font("Arial", 20));
 
         VBox vbox = new VBox();
-        vbox.getChildren().addAll(title, hbox, labels, dice20, dice12, dice10, dice8, dice6, dice4, customDice);
+        vbox.getChildren().addAll(title, hbox, labels, diceBoxes[0], diceBoxes[1],
+                diceBoxes[2], diceBoxes[3], diceBoxes[4], diceBoxes[5], customDice);
         vbox.setSpacing(5);
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(0, 0, 0, 550));
