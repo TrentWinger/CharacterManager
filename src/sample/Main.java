@@ -25,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -416,6 +417,7 @@ public class Main extends Application {
                     addWis.clear();
                     addCha.clear();
                 }
+                save();
             }
         });
 
@@ -778,18 +780,68 @@ public class Main extends Application {
         Label title = new Label("Dice Roller");
         title.setFont(new Font("Arial", 20));
 
-        VBox vbox = new VBox();
-        vbox.getChildren().addAll(title, hbox, labels, diceBoxes[0], diceBoxes[1],
+        VBox dice = new VBox();
+        dice.getChildren().addAll(title, hbox, labels, diceBoxes[0], diceBoxes[1],
                 diceBoxes[2], diceBoxes[3], diceBoxes[4], diceBoxes[5], customDice);
-        vbox.setSpacing(5);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setPadding(new Insets(10, 0, 0, 550));
+        dice.setSpacing(5);
+        dice.setAlignment(Pos.CENTER);
+        dice.setPadding(new Insets(10, 0, 0, 550));
+
+        TextField[] dropLowestArr = new TextField[7];
+
+        for(int i = 0; i<7; i++){
+            TextField resultsBox = new TextField();
+            resultsBox.setEditable(false);
+            resultsBox.setFont(new Font("Arial", 15));
+            resultsBox.setMaxWidth(buttonSize);
+            resultsBox.setMinHeight(buttonSize);
+
+            dropLowestArr[i] = resultsBox;
+        }
+
+        final Button rollDrop = new Button("Roll 4d6, drop lowest.");
+        rollDrop.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                for(int i = 0; i<7; i++){
+
+                    int[] temp = new int[4];
+                    Random rand = new Random();
+                    for(int j = 0; j < temp.length; j++){
+                     temp[j] = (rand.nextInt(6)+1);
+                    }
+
+                    Arrays.sort(temp);
+
+                    int resultNum = temp[1]+temp[2]+temp[3];
+
+                    dropLowestArr[i].setText(Integer.toString(resultNum));
+
+
+                }
+            }
+        });
+
+
+
+        HBox scoreResults = new HBox();
+        scoreResults.getChildren().addAll(dropLowestArr[0], dropLowestArr[1],dropLowestArr[2],
+                dropLowestArr[3], dropLowestArr[4], dropLowestArr[5]);
+        scoreResults.setAlignment(Pos.CENTER);
+
+
+        VBox dropLowest = new VBox();
+        dropLowest.getChildren().addAll(rollDrop, scoreResults);
+        dropLowest.setSpacing(5);
+        dropLowest.setAlignment(Pos.CENTER);
+        dropLowest.setPadding(new Insets(200, 0, 0, 125));
+
 
         Image background = new Image("File:images/parchment.jpg");
         ImageView iv = new ImageView();
         iv.setImage(background);
 
-        ((Group) diceScene.getRoot()).getChildren().addAll(iv, vbox);
+        ((Group) diceScene.getRoot()).getChildren().addAll(iv, dice, dropLowest);
 
     }
 
@@ -801,7 +853,6 @@ public class Main extends Application {
         primaryStage.show();
 
     }
-
 
     private void createInit(Stage primaryStage) {
 

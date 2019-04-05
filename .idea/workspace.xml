@@ -2,33 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Testing commit functionality from IntelliJ">
-      <change afterPath="$PROJECT_DIR$/src/sample/InitiativeEntry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Characters.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Characters.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DnDCharacters.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DnDCharacters.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$10.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$11.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$12.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$13.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$14.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$15.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$16.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$17.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$18.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$19.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DnDCharacters/sample/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DnDCharacters/sample/sample.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/sample.fxml" beforeDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,32 +69,39 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-172">
-              <caret line="833" column="26" selection-start-line="833" selection-start-column="26" selection-end-line="833" selection-end-column="26" />
+            <state relative-caret-position="-933">
+              <caret line="413" column="31" selection-start-line="413" selection-start-column="31" selection-end-line="413" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1173#1187#0" expanded="true" />
                 <element signature="e#1366#1383#0" expanded="true" />
                 <element signature="class#18051:18377" />
                 <element signature="class#18470:18618" />
-                <element signature="e#18568#18569#0" expanded="true" />
-                <element signature="e#18606#18607#0" expanded="true" />
+                <element signature="e#18946#18947#0" expanded="true" />
+                <element signature="e#18984#18985#0" expanded="true" />
                 <element signature="class#18711:18909" />
                 <element signature="class#19002:19168" />
-                <element signature="e#19100#19101#0" expanded="true" />
-                <element signature="e#19157#19158#0" expanded="true" />
+                <element signature="e#19478#19479#0" expanded="true" />
+                <element signature="e#19535#19536#0" expanded="true" />
                 <element signature="class#19268:19434" />
-                <element signature="e#19366#19367#0" expanded="true" />
-                <element signature="e#19423#19424#0" expanded="true" />
+                <element signature="e#19744#19745#0" expanded="true" />
+                <element signature="e#19801#19802#0" expanded="true" />
                 <element signature="method#save#0;class#Main#0" />
                 <element signature="method#load#0;class#Main#0" />
+                <element signature="method#toTableScene#0;class#Main#0" />
                 <element signature="method#toDiceScene#0;class#Main#0" />
-                <element signature="e#28081#28082#0" expanded="true" />
-                <element signature="e#28139#28140#0" expanded="true" />
-                <element signature="e#28348#28349#0" expanded="true" />
-                <element signature="e#28405#28406#0" expanded="true" />
-                <element signature="e#32949#32950#0" expanded="true" />
-                <element signature="e#33194#33195#0" expanded="true" />
+                <element signature="method#createDice#0;class#Main#0" />
+                <element signature="class#27376:27883" />
+                <element signature="class#27983:28150" />
+                <element signature="e#28556#28557#0" expanded="true" />
+                <element signature="e#28614#28615#0" expanded="true" />
+                <element signature="e#28823#28824#0" expanded="true" />
+                <element signature="e#28880#28881#0" expanded="true" />
+                <element signature="class#30716:30882" />
+                <element signature="method#toInitScene#0;class#Main#0" />
+                <element signature="method#createInit#0;class#Main#0" />
+                <element signature="e#34596#34597#0" expanded="true" />
+                <element signature="e#34841#34842#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -126,7 +111,7 @@
         <entry file="file://$PROJECT_DIR$/src/sample/InitiativeEntry.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
               <folding>
                 <element signature="e#279#280#0" expanded="true" />
                 <element signature="e#310#311#0" expanded="true" />
@@ -194,7 +179,7 @@
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="82" />
     <option name="y" value="22" />
     <option name="width" value="1950" />
@@ -246,7 +231,7 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554475666339" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554482492589" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -394,17 +379,24 @@
       <option name="project" value="LOCAL" />
       <updated>1554423013937</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added initiative tracker as well as various improvements to other scenes.">
+      <created>1554475762420</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1554475762420</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="1302000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="33" y="9" width="780" height="830" extended-state="0" />
+    <frame x="-6" y="-6" width="1549" height="837" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.28116342" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.13615024" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -414,7 +406,7 @@
       <window_info anchor="bottom" id="FindBugs-IDEA" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33142856" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3281471" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -446,7 +438,8 @@
     <MESSAGE value="Testing commit from IntelliJ" />
     <MESSAGE value="Testing commit functionality from IntelliJ" />
     <MESSAGE value="Vastly reduced code for dice rolling scene." />
-    <option name="LAST_COMMIT_MESSAGE" value="Vastly reduced code for dice rolling scene." />
+    <MESSAGE value="Added initiative tracker as well as various improvements to other scenes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added initiative tracker as well as various improvements to other scenes." />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -501,7 +494,7 @@
     <entry file="file://$PROJECT_DIR$/src/sample/InitiativeEntry.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
           <folding>
             <element signature="e#279#280#0" expanded="true" />
             <element signature="e#310#311#0" expanded="true" />
@@ -517,32 +510,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-172">
-          <caret line="833" column="26" selection-start-line="833" selection-start-column="26" selection-end-line="833" selection-end-column="26" />
+        <state relative-caret-position="-933">
+          <caret line="413" column="31" selection-start-line="413" selection-start-column="31" selection-end-line="413" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1173#1187#0" expanded="true" />
             <element signature="e#1366#1383#0" expanded="true" />
             <element signature="class#18051:18377" />
             <element signature="class#18470:18618" />
-            <element signature="e#18568#18569#0" expanded="true" />
-            <element signature="e#18606#18607#0" expanded="true" />
+            <element signature="e#18946#18947#0" expanded="true" />
+            <element signature="e#18984#18985#0" expanded="true" />
             <element signature="class#18711:18909" />
             <element signature="class#19002:19168" />
-            <element signature="e#19100#19101#0" expanded="true" />
-            <element signature="e#19157#19158#0" expanded="true" />
+            <element signature="e#19478#19479#0" expanded="true" />
+            <element signature="e#19535#19536#0" expanded="true" />
             <element signature="class#19268:19434" />
-            <element signature="e#19366#19367#0" expanded="true" />
-            <element signature="e#19423#19424#0" expanded="true" />
+            <element signature="e#19744#19745#0" expanded="true" />
+            <element signature="e#19801#19802#0" expanded="true" />
             <element signature="method#save#0;class#Main#0" />
             <element signature="method#load#0;class#Main#0" />
+            <element signature="method#toTableScene#0;class#Main#0" />
             <element signature="method#toDiceScene#0;class#Main#0" />
-            <element signature="e#28081#28082#0" expanded="true" />
-            <element signature="e#28139#28140#0" expanded="true" />
-            <element signature="e#28348#28349#0" expanded="true" />
-            <element signature="e#28405#28406#0" expanded="true" />
-            <element signature="e#32949#32950#0" expanded="true" />
-            <element signature="e#33194#33195#0" expanded="true" />
+            <element signature="method#createDice#0;class#Main#0" />
+            <element signature="class#27376:27883" />
+            <element signature="class#27983:28150" />
+            <element signature="e#28556#28557#0" expanded="true" />
+            <element signature="e#28614#28615#0" expanded="true" />
+            <element signature="e#28823#28824#0" expanded="true" />
+            <element signature="e#28880#28881#0" expanded="true" />
+            <element signature="class#30716:30882" />
+            <element signature="method#toInitScene#0;class#Main#0" />
+            <element signature="method#createInit#0;class#Main#0" />
+            <element signature="e#34596#34597#0" expanded="true" />
+            <element signature="e#34841#34842#0" expanded="true" />
           </folding>
         </state>
       </provider>
