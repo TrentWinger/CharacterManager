@@ -17,6 +17,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -37,11 +39,16 @@ public class Main extends Application {
 
     private Scene tableScene;
     private Scene diceScene;
+    private Scene initScene;
 
     private TableView<RPGCharacter> table = new TableView<RPGCharacter>();
     private ObservableList<RPGCharacter> data =
-            FXCollections.observableArrayList(
-            );
+            FXCollections.observableArrayList();
+
+    private TableView<InitiativeEntry> initTable = new TableView<InitiativeEntry>();
+    private ObservableList<InitiativeEntry> initData =
+            FXCollections.observableArrayList();
+
 
     public static void main(String[] args) {
         launch(args);
@@ -57,7 +64,7 @@ public class Main extends Application {
         primaryStage.setHeight(600);
 
         final Label label = new Label("Dungeons and Dragons Characters");
-        label.setFont(new Font("Lucida", 20));
+        label.setFont(new Font("Arial", 20));
 
         table.setEditable(true);
 
@@ -412,6 +419,25 @@ public class Main extends Application {
             }
         });
 
+        final Button deleteEntry = new Button("Remove Selected");
+        deleteEntry.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                RPGCharacter selectedEntry = table.getSelectionModel().getSelectedItem();
+
+                Alert warning = new Alert(Alert.AlertType.CONFIRMATION,
+                        "Delete "+selectedEntry.getCharacter()+"?",
+                        ButtonType.YES, ButtonType.NO);
+
+                warning.showAndWait();
+
+                if(warning.getResult() == ButtonType.YES){
+                    data.remove(selectedEntry);
+                    table.getItems().remove(selectedEntry);
+                }
+            }
+        });
+
         final Button saveButton = new Button("Save");
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -426,6 +452,7 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e) {
                 load();
+                table.getSortOrder().add(dateCol);
             }
         });
 
@@ -437,17 +464,30 @@ public class Main extends Application {
             }
         });
 
+        final Button initButton = new Button("Initiatives");
+        initButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toInitScene(primaryStage);
+            }
+        });
+
         hb.getChildren().addAll(addPlayerName, addCharacterName, addRace, addSubRace, addPrimary,
                 addSecondary, addStatus, addLocation, addDate, addLevel, addStr,
                 addDex, addCon, addInt, addWis, addCha, addButton, saveButton,
                 loadButton);
         hb.setSpacing(3);
 
+        HBox navigation = new HBox();
+        navigation.setSpacing(5);
+        navigation.getChildren().addAll(diceButton, initButton);
+        navigation.setAlignment(Pos.CENTER);
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table, hb, diceButton);
+        vbox.getChildren().addAll(label, navigation, table, hb, deleteEntry);
+        vbox.setAlignment(Pos.CENTER);
 
         Image background = new Image("File:images/parchment.jpg");
         ImageView iv = new ImageView();
@@ -456,11 +496,12 @@ public class Main extends Application {
 
         ((Group) scene.getRoot()).getChildren().addAll(iv, vbox);
 
-        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("D&D");
         primaryStage.setScene(scene);
         primaryStage.show();
+
         load();
+        table.getSortOrder().add(dateCol);
         tableScene = scene;
     }
 
@@ -558,7 +599,6 @@ public class Main extends Application {
         primaryStage.setScene(diceScene);
         primaryStage.show();
     }
-
 
     private void createDice(Stage primaryStage) {
         diceScene = new Scene(new Group());
@@ -699,8 +739,16 @@ public class Main extends Application {
             }
         });
 
+        final Button initButton = new Button("Initiatives");
+        initButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toInitScene(primaryStage);
+            }
+        });
+
         HBox hbox = new HBox();
-        hbox.getChildren().addAll(changeScene);
+        hbox.getChildren().addAll(changeScene, initButton);
         hbox.setSpacing(10);
         hbox.setAlignment(Pos.CENTER);
 
@@ -735,13 +783,143 @@ public class Main extends Application {
                 diceBoxes[2], diceBoxes[3], diceBoxes[4], diceBoxes[5], customDice);
         vbox.setSpacing(5);
         vbox.setAlignment(Pos.CENTER);
-        vbox.setPadding(new Insets(0, 0, 0, 550));
+        vbox.setPadding(new Insets(10, 0, 0, 550));
 
         Image background = new Image("File:images/parchment.jpg");
         ImageView iv = new ImageView();
         iv.setImage(background);
 
         ((Group) diceScene.getRoot()).getChildren().addAll(iv, vbox);
+
+    }
+
+    private void toInitScene(Stage primaryStage) {
+        if (initScene == null) {
+            createInit(primaryStage);
+        }
+        primaryStage.setScene(initScene);
+        primaryStage.show();
+
+    }
+
+
+    private void createInit(Stage primaryStage) {
+
+        initScene = new Scene(new Group());
+        initTable.setEditable(true);
+
+        TableColumn charName = new TableColumn("Character Name");
+        charName.setMinWidth(300);
+        charName.setCellValueFactory(
+                new PropertyValueFactory<InitiativeEntry, String>("initName")
+        );
+
+        TableColumn charInit = new TableColumn("Initiative Score");
+        charInit.setMinWidth(100);
+        charInit.setCellValueFactory(
+                new PropertyValueFactory<InitiativeEntry, String>("initScore")
+        );
+
+        final TextField addName = new TextField();
+        addName.setPromptText("Character/Enemy Name");
+
+        final TextField addScore = new TextField();
+        addScore.setPromptText("Initiative Score");
+        addScore.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent ke){
+                if (ke.getCode().equals(KeyCode.ENTER)){
+                    initData.add(new InitiativeEntry(
+                            addName.getText(),
+                            Integer.parseInt(addScore.getText())
+                    ));
+                    addName.clear();
+                    addScore.clear();
+                    initTable.getSortOrder().add(charInit);
+                    addName.requestFocus();
+                }
+            }
+        });
+
+        final Button addButton = new Button("Add");
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                initData.add(new InitiativeEntry(
+                        addName.getText(),
+                        Integer.parseInt(addScore.getText())
+                ));
+                addName.clear();
+                addScore.clear();
+                initTable.getSortOrder().add(charInit);
+            }
+        });
+
+
+        initTable.setItems(initData);
+        initTable.getColumns().addAll(charName, charInit);
+
+
+        Button changeScene = new Button("Character Table");
+        changeScene.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toTableScene(primaryStage);
+            }
+        });
+
+        Button toDice = new Button("Dice");
+        toDice.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toDiceScene(primaryStage);
+            }
+        });
+
+        final Button clearTable = new Button("Clear Table");
+        clearTable.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                initData.clear();
+                addName.clear();
+                addScore.clear();
+            }
+        });
+
+        final Button deleteEntry = new Button("Remove Selected");
+        deleteEntry.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                InitiativeEntry selectedEntry = initTable.getSelectionModel().getSelectedItem();
+                initData.remove(selectedEntry);
+                initTable.getItems().remove(selectedEntry);
+            }
+        });
+
+        HBox navigation = new HBox();
+        navigation.setSpacing(5);
+        navigation.getChildren().addAll(changeScene, toDice);
+        navigation.setAlignment(Pos.CENTER);
+
+        HBox additions = new HBox();
+        additions.setSpacing(5);
+        additions.getChildren().addAll(addName, addScore, addButton);
+        additions.setAlignment(Pos.CENTER);
+
+        Label title = new Label("Initiative Tracker");
+        title.setFont(new Font("Arial", 20));
+
+        final VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.getChildren().addAll(title, navigation, initTable, additions, deleteEntry, clearTable);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setPadding(new Insets(10, 0, 0, 550));
+
+        Image background = new Image("File:images/parchment.jpg");
+        ImageView iv = new ImageView();
+        iv.setImage(background);
+
+        ((Group) initScene.getRoot()).getChildren().addAll(iv, vbox);
 
     }
 }
