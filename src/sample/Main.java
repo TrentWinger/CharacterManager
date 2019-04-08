@@ -238,7 +238,7 @@ public class Main extends Application {
                     }
                 }
         );
-        TableColumn conCol = new TableColumn("STR");
+        TableColumn conCol = new TableColumn("CON");
         conCol.setCellValueFactory(
                 new PropertyValueFactory<RPGCharacter, String>("c_con"));
         conCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -287,7 +287,7 @@ public class Main extends Application {
                 }
         );
 
-        statsCol.getColumns().addAll(strCol, dexCol, conCol, wisCol, intCol, chaCol);
+        statsCol.getColumns().addAll(strCol, dexCol, conCol, intCol, wisCol, chaCol);
 
         /**
          * The above code is to add ability scores into one column for characters.
@@ -422,20 +422,21 @@ public class Main extends Application {
         });
 
         final Button deleteEntry = new Button("Remove Selected");
-        deleteEntry.setOnAction(new EventHandler<ActionEvent>(){
+        deleteEntry.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
                 RPGCharacter selectedEntry = table.getSelectionModel().getSelectedItem();
 
                 Alert warning = new Alert(Alert.AlertType.CONFIRMATION,
-                        "Delete "+selectedEntry.getCharacter()+"?",
+                        "Delete " + selectedEntry.getCharacter() + "?",
                         ButtonType.YES, ButtonType.NO);
 
                 warning.showAndWait();
 
-                if(warning.getResult() == ButtonType.YES){
+                if (warning.getResult() == ButtonType.YES) {
                     data.remove(selectedEntry);
                     table.getItems().remove(selectedEntry);
+                    save();
                 }
             }
         });
@@ -476,7 +477,7 @@ public class Main extends Application {
 
         hb.getChildren().addAll(addPlayerName, addCharacterName, addRace, addSubRace, addPrimary,
                 addSecondary, addStatus, addLocation, addDate, addLevel, addStr,
-                addDex, addCon, addInt, addWis, addCha, addButton, saveButton,
+                addDex, addCon, addWis, addInt, addCha, addButton, saveButton,
                 loadButton);
         hb.setSpacing(3);
 
@@ -789,7 +790,7 @@ public class Main extends Application {
 
         TextField[] dropLowestArr = new TextField[7];
 
-        for(int i = 0; i<7; i++){
+        for (int i = 0; i < 7; i++) {
             TextField resultsBox = new TextField();
             resultsBox.setEditable(false);
             resultsBox.setFont(new Font("Arial", 15));
@@ -803,17 +804,17 @@ public class Main extends Application {
         rollDrop.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                for(int i = 0; i<7; i++){
+                for (int i = 0; i < 7; i++) {
 
                     int[] temp = new int[4];
                     Random rand = new Random();
-                    for(int j = 0; j < temp.length; j++){
-                     temp[j] = (rand.nextInt(6)+1);
+                    for (int j = 0; j < temp.length; j++) {
+                        temp[j] = (rand.nextInt(6) + 1);
                     }
 
                     Arrays.sort(temp);
 
-                    int resultNum = temp[1]+temp[2]+temp[3];
+                    int resultNum = temp[1] + temp[2] + temp[3];
 
                     dropLowestArr[i].setText(Integer.toString(resultNum));
 
@@ -823,9 +824,8 @@ public class Main extends Application {
         });
 
 
-
         HBox scoreResults = new HBox();
-        scoreResults.getChildren().addAll(dropLowestArr[0], dropLowestArr[1],dropLowestArr[2],
+        scoreResults.getChildren().addAll(dropLowestArr[0], dropLowestArr[1], dropLowestArr[2],
                 dropLowestArr[3], dropLowestArr[4], dropLowestArr[5]);
         scoreResults.setAlignment(Pos.CENTER);
 
@@ -871,44 +871,96 @@ public class Main extends Application {
                 new PropertyValueFactory<InitiativeEntry, String>("initScore")
         );
 
+        TableColumn charHealth = new TableColumn("Health");
+        charHealth.setMinWidth(100);
+        charHealth.setCellValueFactory(
+                new PropertyValueFactory<InitiativeEntry, String>("health")
+        );
+        charHealth.setCellFactory(TextFieldTableCell.forTableColumn());
+        charHealth.setOnEditCommit(
+                new EventHandler<CellEditEvent<InitiativeEntry, String>>() {
+                    @Override
+                    public void handle(CellEditEvent<InitiativeEntry, String> t) {
+                        t.getTableView().getItems().get(t.getTablePosition().getRow()).setHealth(((t.getNewValue())));
+                    }
+                }
+        );
+
+
         final TextField addName = new TextField();
         addName.setPromptText("Character/Enemy Name");
 
-        final TextField addScore = new TextField();
-        addScore.setPromptText("Initiative Score");
-        addScore.setOnKeyPressed(new EventHandler<KeyEvent>(){
+        final TextField addInit = new TextField();
+        addInit.setPromptText("Initiative Score");
+
+
+        final TextField addHealth = new TextField();
+        addHealth.setPromptText("Character/Enemy Health");
+        addHealth.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(KeyEvent ke){
-                if (ke.getCode().equals(KeyCode.ENTER)){
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
                     initData.add(new InitiativeEntry(
                             addName.getText(),
-                            Integer.parseInt(addScore.getText())
+                            Integer.parseInt(addInit.getText()),
+                            addHealth.getText()
                     ));
                     addName.clear();
-                    addScore.clear();
+                    addInit.clear();
+                    addHealth.clear();
                     initTable.getSortOrder().add(charInit);
                     addName.requestFocus();
                 }
             }
         });
 
+        addInit.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
+                    if (addHealth.getText().equals("")) {
+                        initData.add(new InitiativeEntry(
+                                addName.getText(),
+                                Integer.parseInt(addInit.getText()),
+                                "-"
+                        ));
+                    } else {
+                        initData.add(new InitiativeEntry(
+                                addName.getText(),
+                                Integer.parseInt(addInit.getText()),
+                                addHealth.getText()
+                        ));
+                    }
+                    addName.clear();
+                    addInit.clear();
+                    addHealth.clear();
+                    initTable.getSortOrder().add(charInit);
+                    addName.requestFocus();
+
+                }
+            }
+        });
+
+
         final Button addButton = new Button("Add");
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 initData.add(new InitiativeEntry(
-                        addName.getText(),
-                        Integer.parseInt(addScore.getText())
-                ));
+                                addName.getText(),
+                                Integer.parseInt(addInit.getText()),
+                                addHealth.getText()
+                        )
+                );
                 addName.clear();
-                addScore.clear();
+                addInit.clear();
                 initTable.getSortOrder().add(charInit);
             }
         });
 
 
         initTable.setItems(initData);
-        initTable.getColumns().addAll(charName, charInit);
+        initTable.getColumns().addAll(charName, charInit, charHealth);
 
 
         Button changeScene = new Button("Character Table");
@@ -933,14 +985,15 @@ public class Main extends Application {
             public void handle(ActionEvent e) {
                 initData.clear();
                 addName.clear();
-                addScore.clear();
+                addInit.clear();
+                addHealth.clear();
             }
         });
 
         final Button deleteEntry = new Button("Remove Selected");
-        deleteEntry.setOnAction(new EventHandler<ActionEvent>(){
+        deleteEntry.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
                 InitiativeEntry selectedEntry = initTable.getSelectionModel().getSelectedItem();
                 initData.remove(selectedEntry);
                 initTable.getItems().remove(selectedEntry);
@@ -954,7 +1007,7 @@ public class Main extends Application {
 
         HBox additions = new HBox();
         additions.setSpacing(5);
-        additions.getChildren().addAll(addName, addScore, addButton);
+        additions.getChildren().addAll(addName, addInit, addHealth, addButton);
         additions.setAlignment(Pos.CENTER);
 
         Label title = new Label("Initiative Tracker");
