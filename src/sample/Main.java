@@ -5,11 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -25,13 +23,17 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 
 public class Main extends Application {
 
     private File file = new File("Characters.csv");
+    private File dndDate = new File("Date.txt");
     private BufferedWriter bw;
     private FileWriter fw;
     private BufferedReader br;
@@ -41,6 +43,7 @@ public class Main extends Application {
     private Scene tableScene;
     private Scene diceScene;
     private Scene initScene;
+    private Scene timeScene;
 
     private TableView<RPGCharacter> table = new TableView<RPGCharacter>();
     private ObservableList<RPGCharacter> data =
@@ -475,6 +478,14 @@ public class Main extends Application {
             }
         });
 
+        final Button timeButton = new Button("Time/Weather");
+        timeButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toTimeScene(primaryStage);
+            }
+        });
+
         hb.getChildren().addAll(addPlayerName, addCharacterName, addRace, addSubRace, addPrimary,
                 addSecondary, addStatus, addLocation, addDate, addLevel, addStr,
                 addDex, addCon, addWis, addInt, addCha, addButton, saveButton,
@@ -483,7 +494,7 @@ public class Main extends Application {
 
         HBox navigation = new HBox();
         navigation.setSpacing(5);
-        navigation.getChildren().addAll(diceButton, initButton);
+        navigation.getChildren().addAll(diceButton, initButton, timeButton);
         navigation.setAlignment(Pos.CENTER);
 
         final VBox vbox = new VBox();
@@ -750,8 +761,16 @@ public class Main extends Application {
             }
         });
 
+        final Button timeButton = new Button("Time/Weather");
+        timeButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toTimeScene(primaryStage);
+            }
+        });
+
         HBox hbox = new HBox();
-        hbox.getChildren().addAll(changeScene, initButton);
+        hbox.getChildren().addAll(changeScene, initButton, timeButton);
         hbox.setSpacing(10);
         hbox.setAlignment(Pos.CENTER);
 
@@ -979,6 +998,14 @@ public class Main extends Application {
             }
         });
 
+        final Button timeButton = new Button("Time/Weather");
+        timeButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toTimeScene(primaryStage);
+            }
+        });
+
         final Button clearTable = new Button("Clear Table");
         clearTable.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1002,7 +1029,7 @@ public class Main extends Application {
 
         HBox navigation = new HBox();
         navigation.setSpacing(5);
-        navigation.getChildren().addAll(changeScene, toDice);
+        navigation.getChildren().addAll(changeScene, toDice, timeButton);
         navigation.setAlignment(Pos.CENTER);
 
         HBox additions = new HBox();
@@ -1024,6 +1051,208 @@ public class Main extends Application {
         iv.setImage(background);
 
         ((Group) initScene.getRoot()).getChildren().addAll(iv, vbox);
+
+    }
+
+    private void toTimeScene(Stage primaryStage) {
+
+        if (timeScene == null) {
+            createTime(primaryStage);
+        }
+
+        primaryStage.setScene(timeScene);
+        primaryStage.show();
+
+    }
+
+    private void createTime(Stage primaryStage) {
+        timeScene = new Scene(new Group());
+
+
+        //Example: May 28 1000
+        String date = "";
+
+        try {
+
+            fr = new FileReader("Date.txt");
+            br = new BufferedReader(fr);
+            date = br.readLine();
+            br.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String[] dateArray = date.split(" ");
+
+        System.out.println(dateArray[0]);
+        System.out.println(dateArray[1]);
+        System.out.println(dateArray[2]);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy M dd");
+        Calendar calender = new GregorianCalendar(Integer.parseInt(dateArray[0]),
+                                                  Integer.parseInt(dateArray[1]),
+                                                  Integer.parseInt(dateArray[2]));
+        System.out.println(sdf.format(calender.getTime()));
+
+        SimpleDateFormat displayFormat = new SimpleDateFormat("MMM dd yyy");
+
+
+        Label description = new Label("The Date Is:");
+        description.setFont(new Font("Arial", 10));
+
+        Label dateLabel = new Label(displayFormat.format(calender.getTime()));
+        dateLabel.setFont(new Font("Arial", 50));
+
+        final Button incDay = new Button("Next Day");
+        incDay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calender.add(Calendar.DAY_OF_MONTH, 1);
+                dateLabel.setText(displayFormat.format(calender.getTime()));
+            }
+        });
+
+        final Button incWeek = new Button("Next Week");
+        incWeek.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calender.add(Calendar.DAY_OF_MONTH, 7);
+                dateLabel.setText(displayFormat.format(calender.getTime()));
+            }
+        });
+
+        final Button incMonth = new Button("Next Month");
+        incMonth.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calender.add(Calendar.MONTH, 1);
+                dateLabel.setText(displayFormat.format(calender.getTime()));
+            }
+        });
+
+        final Button incYear = new Button("Next Year");
+        incYear.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calender.add(Calendar.YEAR, 1);
+                dateLabel.setText(displayFormat.format(calender.getTime()));
+            }
+        });
+
+        final Button decDay = new Button("Previous Day");
+        decDay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calender.add(Calendar.DAY_OF_MONTH, -1);
+                dateLabel.setText(displayFormat.format(calender.getTime()));
+            }
+        });
+
+        final Button decWeek = new Button("Previous Week");
+        decWeek.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calender.add(Calendar.DAY_OF_MONTH, -7);
+                dateLabel.setText(displayFormat.format(calender.getTime()));
+            }
+        });
+
+        final Button decMonth = new Button("Previous Month");
+        decMonth.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calender.add(Calendar.MONTH, -1);
+                dateLabel.setText(displayFormat.format(calender.getTime()));
+            }
+        });
+
+        final Button decYear = new Button("Previous Year");
+        decYear.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                calender.add(Calendar.YEAR, -1);
+                dateLabel.setText(displayFormat.format(calender.getTime()));
+            }
+        });
+
+        Button saveTime = new Button("Save");
+        saveTime.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                try {
+                    fw = new FileWriter("Date.txt");
+                    bw = new BufferedWriter(fw);
+                    calender.add(Calendar.MONTH, -1);
+                    bw.write(sdf.format(calender.getTime()));
+                    bw.newLine();
+                    bw.close();
+
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+
+        Label title = new Label("Time and Weather");
+        title.setFont(new Font("Arial", 20));
+
+        Button changeScene = new Button("Character Table");
+        changeScene.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toTableScene(primaryStage);
+            }
+        });
+
+        Button toDice = new Button("Dice");
+        toDice.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toDiceScene(primaryStage);
+            }
+        });
+
+        final Button initButton = new Button("Initiatives");
+        initButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                toInitScene(primaryStage);
+            }
+        });
+
+        HBox navigation = new HBox();
+        navigation.setSpacing(5);
+        navigation.getChildren().addAll(changeScene, toDice, initButton);
+        navigation.setAlignment(Pos.CENTER);
+
+        HBox passTime = new HBox();
+        passTime.setSpacing(5);
+        passTime.getChildren().addAll(incDay,incWeek,incMonth,incYear);
+        passTime.setAlignment(Pos.CENTER);
+
+        HBox backTime = new HBox();
+        backTime.setSpacing(5);
+        backTime.getChildren().addAll(decDay, decWeek, decMonth, decYear);
+        backTime.setAlignment(Pos.CENTER);
+
+        final VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.getChildren().addAll(title, navigation, description, dateLabel, passTime, backTime, saveTime);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setPadding(new Insets(10, 0, 0, 550));
+
+        Image background = new Image("File:images/parchment.jpg");
+        ImageView iv = new ImageView();
+        iv.setImage(background);
+
+        ((Group) timeScene.getRoot()).getChildren().addAll(iv, vbox);
+
 
     }
 }
