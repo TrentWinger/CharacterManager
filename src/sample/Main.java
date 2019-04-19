@@ -10,6 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -20,8 +23,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -33,7 +38,9 @@ import java.util.Random;
 public class Main extends Application {
 
     private File file = new File("Characters.csv");
-    private File dndDate = new File("Date.txt");
+    private File campaignFile;
+
+
     private BufferedWriter bw;
     private FileWriter fw;
     private BufferedReader br;
@@ -1068,50 +1075,60 @@ public class Main extends Application {
     private void createTime(Stage primaryStage) {
         timeScene = new Scene(new Group());
 
-
-        //Example: May 28 1000
-        String date = "";
-
-        try {
-
-            fr = new FileReader("Date.txt");
-            br = new BufferedReader(fr);
-            date = br.readLine();
-            br.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String[] dateArray = date.split(" ");
-
-        System.out.println(dateArray[0]);
-        System.out.println(dateArray[1]);
-        System.out.println(dateArray[2]);
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy M dd");
-        Calendar calender = new GregorianCalendar(Integer.parseInt(dateArray[0]),
-                                                  Integer.parseInt(dateArray[1]),
-                                                  Integer.parseInt(dateArray[2]));
-        System.out.println(sdf.format(calender.getTime()));
-
         SimpleDateFormat displayFormat = new SimpleDateFormat("MMM dd yyy");
 
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Campaign");
+
+        File file = fileChooser.showOpenDialog(primaryStage);
+        String date = "";
+        try {
+
+            fr = new FileReader(file);
+            br = new BufferedReader(fr);
+            date = br.readLine();
+            System.out.println(date);
+            br.close();
+
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        String[] campaignArray = date.split(" ");
+        GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(campaignArray[0]),
+                Integer.parseInt(campaignArray[1]),
+                Integer.parseInt(campaignArray[2]));
+
+        campaignTrack thisCampaign = new campaignTrack(campaignArray[3], calendar, Integer.parseInt(campaignArray[4]), campaignArray[5]);
+
+        Label name = new Label(thisCampaign.getCampaignName());
+        name.setFont(new Font("Arial", 20));
 
         Label description = new Label("The Date Is:");
         description.setFont(new Font("Arial", 10));
 
-        Label dateLabel = new Label(displayFormat.format(calender.getTime()));
+        Label dateLabel = new Label(displayFormat.format(calendar.getTime()));
         dateLabel.setFont(new Font("Arial", 50));
+
+
+        final Button loadButton = new Button("Open Campaign");
+        loadButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                createTime(primaryStage);
+                toTimeScene(primaryStage);
+            }
+
+        });
 
         final Button incDay = new Button("Next Day");
         incDay.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                calender.add(Calendar.DAY_OF_MONTH, 1);
-                dateLabel.setText(displayFormat.format(calender.getTime()));
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                dateLabel.setText(displayFormat.format(calendar.getTime()));
             }
         });
 
@@ -1119,8 +1136,8 @@ public class Main extends Application {
         incWeek.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                calender.add(Calendar.DAY_OF_MONTH, 7);
-                dateLabel.setText(displayFormat.format(calender.getTime()));
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+                dateLabel.setText(displayFormat.format(calendar.getTime()));
             }
         });
 
@@ -1128,8 +1145,8 @@ public class Main extends Application {
         incMonth.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                calender.add(Calendar.MONTH, 1);
-                dateLabel.setText(displayFormat.format(calender.getTime()));
+                calendar.add(Calendar.MONTH, 1);
+                dateLabel.setText(displayFormat.format(calendar.getTime()));
             }
         });
 
@@ -1137,8 +1154,8 @@ public class Main extends Application {
         incYear.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                calender.add(Calendar.YEAR, 1);
-                dateLabel.setText(displayFormat.format(calender.getTime()));
+                calendar.add(Calendar.YEAR, 1);
+                dateLabel.setText(displayFormat.format(calendar.getTime()));
             }
         });
 
@@ -1146,8 +1163,8 @@ public class Main extends Application {
         decDay.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                calender.add(Calendar.DAY_OF_MONTH, -1);
-                dateLabel.setText(displayFormat.format(calender.getTime()));
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
+                dateLabel.setText(displayFormat.format(calendar.getTime()));
             }
         });
 
@@ -1155,8 +1172,8 @@ public class Main extends Application {
         decWeek.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                calender.add(Calendar.DAY_OF_MONTH, -7);
-                dateLabel.setText(displayFormat.format(calender.getTime()));
+                calendar.add(Calendar.DAY_OF_MONTH, -7);
+                dateLabel.setText(displayFormat.format(calendar.getTime()));
             }
         });
 
@@ -1164,8 +1181,8 @@ public class Main extends Application {
         decMonth.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                calender.add(Calendar.MONTH, -1);
-                dateLabel.setText(displayFormat.format(calender.getTime()));
+                calendar.add(Calendar.MONTH, -1);
+                dateLabel.setText(displayFormat.format(calendar.getTime()));
             }
         });
 
@@ -1173,8 +1190,8 @@ public class Main extends Application {
         decYear.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                calender.add(Calendar.YEAR, -1);
-                dateLabel.setText(displayFormat.format(calender.getTime()));
+                calendar.add(Calendar.YEAR, -1);
+                dateLabel.setText(displayFormat.format(calendar.getTime()));
             }
         });
 
@@ -1183,10 +1200,13 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e) {
                 try {
-                    fw = new FileWriter("Date.txt");
+                    fw = new FileWriter(file);
                     bw = new BufferedWriter(fw);
-                    calender.add(Calendar.MONTH, -1);
-                    bw.write(sdf.format(calender.getTime()));
+                    calendar.add(Calendar.MONTH, -1);
+                    bw.write(sdf.format(calendar.getTime())
+                            +" "+thisCampaign.getCampaignName()
+                            +" "+thisCampaign.getEra()
+                            +" "+thisCampaign.getTimeOfDay());
                     bw.newLine();
                     bw.close();
 
@@ -1243,7 +1263,7 @@ public class Main extends Application {
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
-        vbox.getChildren().addAll(title, navigation, description, dateLabel, passTime, backTime, saveTime);
+        vbox.getChildren().addAll(title, navigation, name, description, dateLabel, passTime, backTime, saveTime, loadButton);
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(10, 0, 0, 550));
 
@@ -1253,8 +1273,12 @@ public class Main extends Application {
 
         ((Group) timeScene.getRoot()).getChildren().addAll(iv, vbox);
 
-
     }
+
+    public void setCampaignFile(File file){
+        campaignFile = file;
+    }
+
 }
 
 
